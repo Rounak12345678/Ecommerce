@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { emailCheck, login, signup } from "../Redux/Crud/loginslice";
+import { Link } from "react-router-dom";
 
 export default function SignUp() {
   const [user, setUser] = useState({
@@ -18,7 +19,7 @@ export default function SignUp() {
     dispatch(signup(user))
       .unwrap()
       .then((res) => console.log(res, "logres"))
-      .catch((err) => console.log(err, "resrerror"));
+      .catch((err) => console.log(err.message, "resrerror"));
   };
 
   return (
@@ -52,6 +53,7 @@ export default function SignUp() {
               onChange={(e) => setUser({ ...user, password: e.target.value })}
             />
           </div>
+          <Link to="/forgot">Forgot Password</Link>
 
           <button
             type="button"

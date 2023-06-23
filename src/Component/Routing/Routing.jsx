@@ -5,6 +5,7 @@ import About from "../Pages/About";
 import Header from "../Layout/Header";
 import SignUp from "../Pages/SignUp";
 import Login from "../Pages/Login";
+import ForgotPassword from "../Pages/ForgotPassword";
 
 export default function Routing() {
   return (
@@ -16,6 +17,7 @@ export default function Routing() {
           <Route path="/about" element={<About />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/forgot" element={<ForgotPassword />} />
         </Routes>
       </Router>
     </>
