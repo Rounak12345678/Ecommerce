@@ -1,3 +1,4 @@
+/* eslint-disable no-throw-literal */
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosInstance from "../../Helper/helper";
 
@@ -18,20 +19,19 @@ let initialState = {
 //     }
 //   });
 
-export const signup = createAsyncThunk("signup", async (user, { dispatch }) => {
+export const signup = createAsyncThunk("signup", async(user, { dispatch }) => {
   try {
     const checkUser = await axiosInstance.post("/auth/login", user);
-    // console.log(checkUser?.status === 201);
-    if (checkUser?.status === 401) {
-      let res = await axiosInstance.post("/users", user);
-      return res;
-    } else {
-      throw {
+    if (checkUser?.status === 201) {
+      throw new Error({
         msg: "error",
-      };
+      });
     }
   } catch (err) {
-    console.log(err, "error2");
+    if(err?.response.status === 401){
+      let res = await axiosInstance.post("/users", user);
+        return res;
+    }
     throw err;
   }
 });
@@ -69,6 +69,7 @@ export const LoginSlice = createSlice({
       })
       .addCase(login.fulfilled, (state, { payload }) => {
         if (payload?.status === 201) {
+          localStorage.setItem("access_token", payload.data.access_token)
           state.status = "idle";
         }
         console.log(payload?.data, "payload login");
