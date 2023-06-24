@@ -18,7 +18,8 @@ let initialState = {
 
 export const getCategory = createAsyncThunk("category",async()=>{
     try{
-      const res = await axiosInstance.get("/categories");
+      
+      const res = await axiosInstance.get(`/categories`);
       return res;
     }catch(err){
       throw err
@@ -27,9 +28,9 @@ export const getCategory = createAsyncThunk("category",async()=>{
 
 } )
 
-export const getProductByCategory = createAsyncThunk("productCategory",async(id)=>{
+export const getProductByCategory = createAsyncThunk("productCategory",async({id,offset,limit})=>{
     try{
-      const res = await axiosInstance.get(`/categories/${id}/products`);
+      const res = await axiosInstance.get(`/categories/${id}/products?offset=${offset}&limit=${limit}`);
       return res;
     }catch(err){
       throw err
@@ -37,6 +38,8 @@ export const getProductByCategory = createAsyncThunk("productCategory",async(id)
 
 
 } )
+
+
 
 
 
